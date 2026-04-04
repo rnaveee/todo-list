@@ -1,6 +1,15 @@
 import './styles.css'
-import { createUI } from './ui/ui'
+import { createTitle } from './ui/title'
+import { createTaskButton } from './ui/create-task-button'
+import { createTaskDisplay } from './ui/task-display'
 
+const uiContainer = document.createElement("div")
+uiContainer.classList.add("ui-container")
 const app = document.querySelector<HTMLDivElement>('#app')!
 
-app.appendChild(createUI())
+uiContainer.append(
+    createTitle(),
+    createTaskButton(),
+    createTaskDisplay()
+)
+app.appendChild(uiContainer)

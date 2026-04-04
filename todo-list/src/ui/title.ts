@@ -1,12 +1,13 @@
-export function createUI() {
+export function createTitle() {
     const container = document.createElement("div")
     container.classList.add("title-container");
 
     const titleContainer = document.createElement("div")
     container.appendChild(titleContainer)
 
-    titleContainer.textContent = "To-Do List"
+    const titleText = document.createElement("div")
+    titleText.textContent = "To-Do List"
+    titleContainer.appendChild(titleText)
     
-
     return container;
 }

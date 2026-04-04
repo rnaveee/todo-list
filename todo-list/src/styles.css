@@ -1,4 +1,62 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #110C27;
+    display: flex;
+    justify-content: center; 
+    align-items: center;   
+}
+
+.ui-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    align-items: center;  
+    gap: 20px;
+}
+
 .title-container {
     display: flex;
     justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 70px;
+    color: white;
+    width: 500px;
+    height: 100px;
+    background-color: #1f0f67;
+    border: 10px solid black;
+    border-radius: 30px;
+}
+
+.create-task-container > button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #560081;
+    color: white;
+    font-size: 40px;
+    width: 300px;
+    height: 70px;
+    border: 0;
+}
+.create-task-container > button:hover {
+    background-color: #46006c;
+}
+.create-task-container > button:active {
+    background-color: #30004a;
+}
+
+.task-display-container {
+    height: 1000px;
+    width: 1000px;
+    background-color: #1E1640;
+    padding: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.task-display-container > div {
+    color: white;
+    font-weight: bold;
+    font-size: 50px;
 }
