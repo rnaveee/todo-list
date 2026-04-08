@@ -86,11 +86,35 @@ body {
 
 .taskform-container {
     display: flex;
-    position: absolute;
     width: 100%;
-    max-width: 500px;
-    min-height: 100px;
-    background-color: white;
+    max-width: 700px;
+    min-height: 300px;
+    padding: 20px;
+    border: 3px solid black;
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+    font-size: clamp(1rem, 2vw, 3.125rem);
+    background-color: #110c25;
+}
+
+.taskform-overlay {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 24px;
+    background-color: rgba(0, 0, 0, 0.65);
+    z-index: 1000;
+}
+
+.taskform-container > form {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(180px, 1fr);
+    gap: 16px;
+    width: 100%;
+    align-items: start;
 }
 
 @media (max-width: 768px) {
@@ -107,4 +131,170 @@ body {
         min-height: 350px;
         padding: 12px;
     }
+}
+
+.name-container,
+.date-container,
+.priority-container,
+.checklist-container,
+.notes-container,
+.submit-container {
+    display: flex;
+    gap: 10px;
+    padding: 12px;
+    border-radius: 8px;
+    align-items: center;
+}
+
+.name-container {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.name-container > input {
+    flex: 1;
+}
+
+.date-container {
+    grid-column: 2;
+    grid-row: 1;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.priority-container {
+    grid-column: 1;
+    grid-row: 2;
+    justify-self: start;
+}
+
+.checklist-container {
+    grid-column: 1;
+    grid-row: 3;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.notes-container {
+    grid-column: 2;
+    grid-row: 3;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.submit-container {
+    grid-column: 1 / -1;
+    grid-row: 4;
+    justify-content: flex-end;
+    border: 0;
+    padding: 0;
+}
+
+.name-container > label,
+.date-container > label,
+.priority-container > label,
+.checklist-container > label,
+.notes-container > label {
+    white-space: nowrap;
+}
+
+.name-container > input,
+.date-container > input,
+.priority-container > select,
+.checklist-container > input,
+.notes-container > textarea {
+    min-height: 36px;
+    padding: 6px 10px;
+}
+
+.notes-container > textarea {
+    width: 100%;
+    min-height: 160px;
+    resize: vertical;
+}
+
+.checklist-container > button,
+.submit-container > button {
+    min-height: 40px;
+    padding: 8px 14px;
+}
+
+@media (max-width: 768px) {
+    .taskform-container > form {
+        grid-template-columns: 1fr;
+    }
+
+    .name-container,
+    .date-container,
+    .priority-container,
+    .checklist-container,
+    .notes-container,
+    .submit-container {
+        grid-column: 1;
+    }
+
+    .name-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .submit-container {
+        justify-content: stretch;
+    }
+}
+
+.name-container > input {
+    background-color: #1f0f67;
+    color: white;
+    border: 2px solid black;
+    border-radius: 5px;
+    font-size: clamp(1.5rem, 1vw, 3.5rem);
+}
+
+.date-container > input {
+    background-color: #1f0f67;
+    color: white;
+    border: 2px solid black;
+    border-radius: 5px;
+}
+
+.priority-container > select {
+    background-color: #1f0f67;
+    color: white;
+    border: 2px solid black;
+    border-radius: 5px;
+}
+
+.checklist-container > button {
+    background-color: green;
+    border: 2px solid black;
+    color: white;
+    font-weight: bold;
+}
+.checklist-container > button:hover {
+    background-color: rgb(61, 131, 61);
+}
+.checklist-container > button:active {
+    background-color: rgb(163, 206, 163);
+}
+.checklist-container > input,
+.notes-container > textarea {
+    background-color: #1f0f67;
+    color: white;
+    border: 2px solid black;
+    border-radius: 5px;
+}
+
+.submit-container > button {
+    color: white;
+    background-color: blue;
+    border: 2px solid black;
+    font-weight: bold;
+    font-size: clamp(1rem, 1vw, 3.5rem);
+}
+.submit-container > button:hover {
+    background-color: rgb(73, 73, 255);
+}
+.submit-container > button:active {
+    background-color: rgb(161, 161, 255);
 }

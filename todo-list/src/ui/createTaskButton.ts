@@ -1,15 +1,5 @@
-import { handleCreateTask } from './handleCreateTask';
+import { handleCreateTaskForm } from "./handleCreateTask";
 
-type Task = {
-    name: string;
-    dueDate: string;
-    checkList: checkListItem[];
-};
-
-type checkListItem = {
-    action: string;
-    completion: boolean;
-};
 export function createTaskButton(){
     const container = document.createElement("div");
 
@@ -19,8 +9,7 @@ export function createTaskButton(){
 
     createTaskButton.textContent = '+ Create Task';
 
-    // Add click event listener
-
+    createTaskButton.addEventListener('click', handleCreateTaskForm);
 
     return container;
 }
