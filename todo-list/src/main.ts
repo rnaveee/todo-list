@@ -1,6 +1,6 @@
 import './styles.css'
 import { createTitle } from './ui/title'
-import { createTaskButton } from './ui/create-task-button'
+import { createTaskButton } from './ui/createTaskButton'
 import { createTaskDisplay } from './ui/task-display'
 
 const uiContainer = document.createElement("div")
