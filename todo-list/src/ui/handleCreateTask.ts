@@ -76,7 +76,6 @@ export function handleCreateTaskForm() {
         const checklistField = document.createElement('input');
         checklistField.name = 'checklist';
         checklistField.placeholder = 'Task';
-        checklistField.value = 'checklistItem';
         checklistContainer.appendChild(checklistField);
     });
 
@@ -109,10 +108,33 @@ export function handleCreateTaskForm() {
 
         const data = Object.fromEntries(formData.entries());
 
-        const checklist: checkListItem[] = [];
-        const name = formData.get('name') as string;
+        const checklistInputs = checklistContainer.querySelectorAll("input[name='checklist']");
+        const checklistValues = Array.from(checklistInputs).map(input => (input as HTMLInputElement).value);
 
-        console.log(data);
+        const checklistData: checkListItem[] = [];
+        const nameData = formData.get('name') as string;
+        const dueDateData = formData.get('dueDate') as string;
+        const priorityData = formData.get('priority') as string;
+
+        checklistValues.forEach(i => {
+            const checklistItem: checkListItem = {
+                action: i,
+                completion: false,
+            };
+            checklistData.push(checklistItem);
+        });
+
+        const notesData = formData.get('notes') as string;
+
+        const newTask: Task = {
+            name: nameData,
+            dueDate: dueDateData,
+            priorityLevel: priorityData,
+            notes: notesData,
+            checkList: checklistData
+        };
+
+        renderTask(newTask);
     });
 
     taskForm.appendChild(nameContainer);
