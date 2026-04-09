@@ -1,6 +1,7 @@
 export function createTaskDisplay(){
     const container = document.createElement("div")
     container.classList.add("task-display-container")
+    container.id = 'task-display-container';
 
     const taskDisplayContainer = document.createElement("div")
     container.appendChild(taskDisplayContainer)

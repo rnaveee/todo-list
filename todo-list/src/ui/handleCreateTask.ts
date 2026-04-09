@@ -40,7 +40,7 @@ export function handleCreateTaskForm() {
     const priorityInput = document.createElement("select");
     priorityInput.name = 'priority';
     priorityInput.appendChild(document.createElement('option'));
-    const priorities = ['Critical', 'High', 'Medium', 'Minimal', 'Minimal']
+    const priorities = ['Critical', 'High', 'Medium', 'Minimal']
     priorities.forEach(level => {
         const option = document.createElement("option");
         option.value = level;
@@ -106,8 +106,6 @@ export function handleCreateTaskForm() {
 
         const formData = new FormData(taskForm);
 
-        const data = Object.fromEntries(formData.entries());
-
         const checklistInputs = checklistContainer.querySelectorAll("input[name='checklist']");
         const checklistValues = Array.from(checklistInputs).map(input => (input as HTMLInputElement).value);
 
@@ -135,6 +133,7 @@ export function handleCreateTaskForm() {
         };
 
         renderTask(newTask);
+        taskFormOverlay.remove();
     });
 
     taskForm.appendChild(nameContainer);
@@ -162,5 +161,4 @@ export function handleCreateTaskForm() {
 
     uiContainer.appendChild(taskFormOverlay);
 
-    
 }
