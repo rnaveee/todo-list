@@ -367,6 +367,15 @@ body {
     font-weight: bold;
 }
 
+.task-complete-checkbox {
+    width: 30px;
+    height: 30px;
+    margin: 0;
+    flex: 0 0 auto;
+    accent-color: #6ad0ff;
+    cursor: pointer;
+}
+
 .name-display-container > :first-child {
     overflow-wrap: anywhere;
 }
@@ -376,6 +385,11 @@ body {
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.04em;
+}
+
+.task-completion-label {
+    font-size: clamp(1rem, 1.2vw, 1.1rem);
+    font-weight: 700;
 }
 
 .date-display-container {
@@ -389,19 +403,49 @@ body {
 }
 
 .checklist-display-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
     font-size: clamp(1.1rem, 1.9vw, 1.45rem);
     font-weight: 600;
     line-height: 1.6;
+}
+
+.checklist-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+}
+
+.checklist-item > input {
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    accent-color: #6ad0ff;
+    cursor: pointer;
+}
+
+.checklist-item > span {
+    display: inline-block;
+}
+
+.notes-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
 }
 
 .notes-display-container {
     position: absolute;
     right: 20px;
     bottom: 18px;
-    max-width: 28ch;
+    width: min(34ch, 32vw);
     text-align: right;
-    font-size: 0.95rem;
-    line-height: 1.5;
+    font-size: 1.1rem;
+    line-height: 1.6;
     color: #e5e1ff;
 }
 

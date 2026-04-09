@@ -6,7 +6,7 @@ export function createTitle() {
     container.appendChild(titleContainer)
 
     const titleText = document.createElement("div")
-    titleText.textContent = "To-Do List"
+    titleText.textContent = "Task Manager";
     titleContainer.appendChild(titleText)
     
     return container;
