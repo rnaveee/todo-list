@@ -129,4 +129,6 @@ export function renderTask(newTask: Task){
     leftColumn.appendChild(checklistContainer);
     newTaskContainer.appendChild(dateContainer);
     newTaskContainer.appendChild(notesContainer);
+
+    return newTask;
 }
