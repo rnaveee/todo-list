@@ -110,11 +110,13 @@ body {
 }
 
 .taskform-container > form {
+    position: relative;
     display: grid;
     grid-template-columns: minmax(0, 2fr) minmax(180px, 1fr);
     gap: 16px;
     width: 100%;
     align-items: start;
+    padding: 28px 8px 8px;
 }
 
 @media (max-width: 768px) {
@@ -188,6 +190,32 @@ body {
     justify-content: flex-end;
     border: 0;
     padding: 0;
+}
+
+.close-form-container {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0;
+}
+
+.close-form-container > button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 36px;
+    height: 36px;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: white;
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.close-form-container > button:hover {
+    background-color: rgba(255, 255, 255, 0.12);
 }
 
 .name-container > label,

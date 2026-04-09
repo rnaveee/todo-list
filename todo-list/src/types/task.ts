@@ -1,6 +1,8 @@
 export type Task = {
     name: string;
     dueDate: string;
+    priorityLevel: string;
+    note: string;
     checkList: checkListItem[];
 };
 

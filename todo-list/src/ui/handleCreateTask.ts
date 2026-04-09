@@ -1,3 +1,6 @@
+import { renderTask } from '../logic/renderTask';
+import type { Task, checkListItem } from '../types/task';
+
 export function handleCreateTaskForm() {
     const uiContainer = document.getElementById("ui-container") as HTMLDivElement;
     const existingOverlay = document.querySelector(".taskform-overlay");
@@ -22,8 +25,10 @@ export function handleCreateTaskForm() {
     const nameLabel = document.createElement("label");
     nameLabel.textContent = 'Task:';
     const nameInput = document.createElement("input");
+    nameInput.name = 'name';
     nameInput.type = 'text';
     nameInput.placeholder = 'Name of task';
+    nameInput.required = true;
     nameContainer.appendChild(nameLabel);
     nameContainer.appendChild(nameInput);
 
@@ -33,6 +38,7 @@ export function handleCreateTaskForm() {
     const priorityLabel = document.createElement("label");
     priorityLabel.textContent = 'Priority level:';
     const priorityInput = document.createElement("select");
+    priorityInput.name = 'priority';
     priorityInput.appendChild(document.createElement('option'));
     const priorities = ['Critical', 'High', 'Medium', 'Minimal', 'Minimal']
     priorities.forEach(level => {
@@ -50,6 +56,7 @@ export function handleCreateTaskForm() {
     const dateLabel = document.createElement("label");
     dateLabel.textContent = 'Due Date';
     const dateInput = document.createElement("input");
+    dateInput.name = 'dueDate';
     dateInput.type = 'date';
     dateContainer.appendChild(dateLabel);
     dateContainer.appendChild(dateInput);
@@ -67,7 +74,9 @@ export function handleCreateTaskForm() {
 
     addToChecklist.addEventListener('click', () => {
         const checklistField = document.createElement('input');
+        checklistField.name = 'checklist';
         checklistField.placeholder = 'Task';
+        checklistField.value = 'checklistItem';
         checklistContainer.appendChild(checklistField);
     });
 
@@ -76,6 +85,7 @@ export function handleCreateTaskForm() {
     const notesLabel = document.createElement("label");
     notesLabel.textContent = "Notes:";
     const notesInput = document.createElement("textarea");
+    notesInput.name = 'notes';
     notesInput.placeholder = "Add notes";
     notesContainer.appendChild(notesLabel);
     notesContainer.appendChild(notesInput);
@@ -87,6 +97,23 @@ export function handleCreateTaskForm() {
     submitContainer.classList.add("submit-container");
     submitContainer.appendChild(submit);
 
+    taskForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        if (!taskForm.checkValidity()){
+            taskForm.reportValidity();
+            return;
+        }
+
+        const formData = new FormData(taskForm);
+
+        const data = Object.fromEntries(formData.entries());
+
+        const checklist: checkListItem[] = [];
+        const name = formData.get('name') as string;
+
+        console.log(data);
+    });
 
     taskForm.appendChild(nameContainer);
     taskForm.appendChild(dateContainer);
@@ -94,6 +121,22 @@ export function handleCreateTaskForm() {
     taskForm.appendChild(checklistContainer);
     taskForm.appendChild(notesContainer);
     taskForm.appendChild(submitContainer);
+
+    const closeContainer = document.createElement('div');
+    closeContainer.classList.add('close-form-container');
+    const closeButton = document.createElement('button');
+    closeButton.type = 'button';
+    closeButton.textContent = 'x';
+    closeButton.setAttribute('aria-label', 'Close task form');
+
+    closeButton.addEventListener('click', () => {
+        taskFormOverlay.remove();
+    });
+
+    closeContainer.appendChild(closeButton);
+    taskForm.appendChild(closeContainer);
+
+
 
     uiContainer.appendChild(taskFormOverlay);
 
