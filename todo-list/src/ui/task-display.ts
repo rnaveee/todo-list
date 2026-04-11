@@ -1,15 +1,14 @@
 export function createTaskDisplay(){
-    const container = document.createElement("div")
-    container.classList.add("task-display-container")
-    container.id = 'task-display-container';
+    const container = document.createElement("div");
+    container.classList.add("task-display-container");
 
-    const taskDisplayContainer = document.createElement("div")
-    container.appendChild(taskDisplayContainer)
-    
-    const titleText = document.createElement("div")
-    taskDisplayContainer.appendChild(titleText)
-    titleText.textContent = "Your tasks"
-    
+    const titleText = document.createElement("div");
+    titleText.textContent = "Your tasks";
+    container.appendChild(titleText);
 
-    return container
+    const taskDisplayContainer = document.createElement("div");
+    taskDisplayContainer.id = 'task-display-container';
+    container.appendChild(taskDisplayContainer);
+    
+    return container;
 }

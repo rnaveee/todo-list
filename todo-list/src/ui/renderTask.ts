@@ -1,6 +1,14 @@
 import type { Task, checkListItem } from '../types/task.ts';
+import { confirmTaskDeletion } from '../logic/confirmTaskDeletion.ts'
 
 export function renderTask(newTask: Task){
+    const setCompletionVisibility = (element: HTMLDivElement, isVisible: boolean) => {
+        element.classList.toggle('is-visible', isVisible);
+    };
+    const hasChecklistItems = newTask.checkList.length > 0;
+    const isChecklistComplete = () =>
+        hasChecklistItems && newTask.checkList.every(check => check.completion === true);
+
     const newTaskContainer = document.createElement('div');
     newTaskContainer.classList.add('new-task');
     const taskDisplayContainer = document.getElementById("task-display-container") as HTMLDivElement;
@@ -10,10 +18,15 @@ export function renderTask(newTask: Task){
     const leftColumn = document.createElement('div');
     leftColumn.classList.add('task-main-content');
     newTaskContainer.appendChild(leftColumn);
+    const sideColumn = document.createElement('div');
+    sideColumn.classList.add('task-side-content');
+    newTaskContainer.appendChild(sideColumn);
 
     const nameContainer = document.createElement('div');
     nameContainer.classList.add('name-display-container');
     leftColumn.appendChild(nameContainer);
+    const taskMetaContainer = document.createElement('div');
+    taskMetaContainer.classList.add('task-meta-container');
     const dateContainer = document.createElement('div');
     dateContainer.classList.add('date-display-container');
     const priorityContainer = document.createElement('div');
@@ -22,6 +35,15 @@ export function renderTask(newTask: Task){
     notesContainer.classList.add('notes-display-container');
     const checklistContainer = document.createElement('div');
     checklistContainer.classList.add('checklist-display-container');
+
+    const removeContainer = document.createElement('div');
+    removeContainer.classList.add('remove-container');
+    const removeButton = document.createElement('button');
+    removeButton.type = 'button';
+    removeButton.textContent = 'X';
+    removeButton.setAttribute('aria-label', `Remove task ${newTask.name}`);
+    removeContainer.appendChild(removeButton);
+    
 
     const taskComplete = document.createElement('input');
     taskComplete.type = 'checkbox';
@@ -44,8 +66,6 @@ export function renderTask(newTask: Task){
     const taskCompletionText = document.createElement('div');
     taskCompletionText.classList.add('task-completion-label');
     taskCompletionText.textContent = 'Completed!';
-    taskCompletionText.style.visibility = 'hidden';
-    taskCompletionText.style.color = 'green';
     nameContainer.appendChild(taskCompletionText);
 
     const colors: Record<string, string> = {
@@ -63,6 +83,7 @@ export function renderTask(newTask: Task){
     notesContainer.appendChild(notesTitle);
 
     const notesDiv = document.createElement('div');
+    notesDiv.classList.add('notes-body');
     notesDiv.textContent = newTask.notes;
     notesContainer.appendChild(notesDiv);
 
@@ -72,20 +93,19 @@ export function renderTask(newTask: Task){
         const checkbox = document.createElement('input');
         const checklistName = document.createElement('span');
         const checklistCompletion = document.createElement('div');
+        checklistCompletion.classList.add('task-completion-label');
         checklistCompletion.textContent = 'Completed!';
-        checklistCompletion.style.visibility = 'hidden';
-        checklistCompletion.style.color = 'green';
 
 
         taskComplete.addEventListener('change', () => {
             if(taskComplete.checked){
-                checklistCompletion.style.visibility = 'visible';
-                taskCompletionText.style.visibility = 'visible';
+                setCompletionVisibility(checklistCompletion, true);
+                setCompletionVisibility(taskCompletionText, true);
                 checkbox.checked = true;
                 item.completion = true;
             } else {
-                checklistCompletion.style.visibility = 'hidden';
-                taskCompletionText.style.visibility = 'hidden';
+                setCompletionVisibility(checklistCompletion, false);
+                setCompletionVisibility(taskCompletionText, false);
                 checkbox.checked = false;
                 item.completion = false;
             }
@@ -93,24 +113,25 @@ export function renderTask(newTask: Task){
 
         checkbox.addEventListener('change', () => {
             if(checkbox.checked) {
-                checklistCompletion.style.visibility = 'visible';
+                setCompletionVisibility(checklistCompletion, true);
                 item.completion = true;
             } else {
-                checklistCompletion.style.visibility = 'hidden';
+                setCompletionVisibility(checklistCompletion, false);
                 item.completion = false;
             }
-            if(newTask.checkList.every(check => check.completion === true)){
+            if(isChecklistComplete()){
                 taskComplete.checked = true;
-                taskCompletionText.style.visibility = 'visible';
+                setCompletionVisibility(taskCompletionText, true);
             } else {
                 taskComplete.checked = false;
-                taskCompletionText.style.visibility = 'hidden';
+                setCompletionVisibility(taskCompletionText, false);
             }
         });
 
         checkbox.type = 'checkbox';
         checkbox.checked = item.completion;
         checklistName.textContent = item.action;
+        setCompletionVisibility(checklistCompletion, item.completion);
 
         checklistItemRow.appendChild(checkbox);
         checklistItemRow.appendChild(checklistName);
@@ -120,15 +141,23 @@ export function renderTask(newTask: Task){
 
     taskComplete.addEventListener('change', () => {
         if(taskComplete.checked){
-            taskCompletionText.style.visibility = 'visible';
+            setCompletionVisibility(taskCompletionText, true);
         } else {
-            taskCompletionText.style.visibility = 'hidden';
+            setCompletionVisibility(taskCompletionText, false);
         }
     });
 
+    setCompletionVisibility(taskCompletionText, isChecklistComplete());
+
+    removeButton.addEventListener('click', () => {
+        confirmTaskDeletion(newTask);
+    });
+
     leftColumn.appendChild(checklistContainer);
-    newTaskContainer.appendChild(dateContainer);
-    newTaskContainer.appendChild(notesContainer);
+    taskMetaContainer.appendChild(dateContainer);
+    taskMetaContainer.appendChild(removeContainer);
+    sideColumn.appendChild(taskMetaContainer);
+    sideColumn.appendChild(notesContainer);
 
     return newTask;
 }

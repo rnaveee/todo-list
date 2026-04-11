@@ -4,22 +4,24 @@
 
 body {
     font-family: 'Roboto', sans-serif;
-    background: linear-gradient(45deg, #1b133b, #100b24);
+    background:
+        radial-gradient(circle at top, rgba(76, 53, 143, 0.2), transparent 55%),
+        linear-gradient(180deg, #17122f 0%, #110d22 100%);
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     min-height: 100vh;
     margin: 0;
+    padding: clamp(12px, 2vw, 24px);
 }
 
 .ui-container {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     gap: 20px;
-    width: 90vw;
-    max-width: none;
+    width: min(1200px, 100%);
+    margin: 0 auto;
 }
 
 .title-container {
@@ -52,7 +54,7 @@ body {
     color: white;
     font-size: clamp(1.2rem, 4vw, 2.5rem);
     width: 100%;
-    max-width: 300px;
+    max-width: 360px;
     min-height: 70px;
     border: 0;
     border-radius: 16px;
@@ -73,10 +75,9 @@ body {
     flex-direction: column;
     gap: 20px;
     width: 100%;
-    min-height: 500px;
+    min-height: min(500px, 70vh);
     background-color: #1E1640;
-    padding: 10px 20px;
-    padding-bottom: 20px;
+    padding: 16px 20px 20px;
     border-radius: 20px;
 }
 
@@ -92,6 +93,7 @@ body {
     width: 100%;
     max-width: 700px;
     min-height: 300px;
+    max-height: min(760px, calc(100vh - 48px));
     padding: 20px;
     border: 3px solid black;
     border-radius: 10px;
@@ -99,6 +101,10 @@ body {
     font-weight: bold;
     font-size: clamp(1rem, 2vw, 3.125rem);
     background-color: #110c25;
+    transform: translateY(-48px);
+    opacity: 0;
+    overflow-y: auto;
+    transition: transform 320ms ease, opacity 320ms ease;
 }
 
 .taskform-overlay {
@@ -110,6 +116,17 @@ body {
     padding: 24px;
     background-color: rgba(0, 0, 0, 0.65);
     z-index: 1000;
+    opacity: 0;
+    transition: opacity 240ms ease;
+}
+
+.taskform-overlay-visible {
+    opacity: 1;
+}
+
+.taskform-overlay-visible .taskform-container {
+    transform: translateY(0);
+    opacity: 1;
 }
 
 .taskform-container > form {
@@ -120,6 +137,67 @@ body {
     width: 100%;
     align-items: start;
     padding: 28px 8px 8px;
+}
+
+.delete-confirmation-container {
+    max-width: 520px;
+    min-height: auto;
+}
+
+.delete-confirmation-form {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    width: 100%;
+    padding: 48px 8px 8px;
+}
+
+.delete-confirmation-text {
+    font-size: clamp(1.1rem, 2vw, 1.4rem);
+    line-height: 1.5;
+    color: #f5f1ff;
+    padding-right: 36px;
+}
+
+.delete-confirmation-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+.delete-confirmation-actions > button {
+    min-height: 42px;
+    padding: 10px 18px;
+    border: 2px solid black;
+    border-radius: 8px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.delete-cancel-button {
+    background-color: #39325f;
+}
+
+.delete-cancel-button:hover {
+    background-color: #4a4272;
+}
+
+.delete-cancel-button:active {
+    background-color: #5b5386;
+}
+
+.delete-confirm-button {
+    background-color: #b11429;
+}
+
+.delete-confirm-button:hover {
+    background-color: #cc1b34;
+}
+
+.delete-confirm-button:active {
+    background-color: #e23e56;
 }
 
 @media (max-width: 768px) {
@@ -236,6 +314,8 @@ body {
 .notes-container > textarea {
     min-height: 36px;
     padding: 6px 10px;
+    width: 100%;
+    max-width: 100%;
 }
 
 .notes-container > textarea {
@@ -337,12 +417,11 @@ body {
 }
 
 .new-task {
-    position: relative;
     display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-columns: minmax(0, 1fr) minmax(240px, 32%);
+    align-items: start;
     gap: 16px 24px;
     padding: 18px 20px;
-    min-height: 190px;
     border: 1px solid black;
     border-radius: 16px;
     background-color: #130d2d;
@@ -355,7 +434,16 @@ body {
     align-items: flex-start;
     gap: 18px;
     min-width: 0;
-    padding-right: 220px;
+}
+
+.task-side-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 18px;
+    width: 100%;
+    min-width: 240px;
+    max-width: 360px;
 }
 
 .name-display-container {
@@ -390,16 +478,60 @@ body {
 .task-completion-label {
     font-size: clamp(1rem, 1.2vw, 1.1rem);
     font-weight: 700;
+    color: green;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 320ms ease, visibility 0s linear 320ms;
+}
+
+.task-completion-label.is-visible {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 320ms ease;
 }
 
 .date-display-container {
-    position: absolute;
-    top: 18px;
-    right: 20px;
     text-align: right;
     white-space: nowrap;
     font-size: clamp(0.85rem, 1.5vw, 1rem);
     color: #d7d2f5;
+}
+
+.task-meta-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.remove-container {
+    display: flex;
+    align-items: center;
+}
+
+.remove-container > button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: #ff4d5f;
+    font-size: 1.4rem;
+    font-weight: 700;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.remove-container > button:hover {
+    background-color: rgba(255, 77, 95, 0.14);
+    color: #ff7080;
+}
+
+.remove-container > button:active {
+    background-color: rgba(255, 77, 95, 0.24);
 }
 
 .checklist-display-container {
@@ -432,21 +564,47 @@ body {
 }
 
 .notes-title {
+    display: inline;
     font-size: 1.15rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.04em;
+    margin-right: 8px;
+}
+
+.notes-body {
+    display: inline;
 }
 
 .notes-display-container {
-    position: absolute;
-    right: 20px;
-    bottom: 18px;
-    width: min(34ch, 32vw);
-    text-align: right;
+    width: 100%;
+    text-align: left;
     font-size: 1.1rem;
     line-height: 1.6;
     color: #e5e1ff;
+    overflow-wrap: anywhere;
+}
+
+@media (max-width: 1024px) {
+    .ui-container {
+        width: min(960px, 100%);
+    }
+
+    .new-task {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .task-side-content {
+        max-width: none;
+        min-width: 0;
+        align-items: flex-start;
+        gap: 14px;
+    }
+
+    .task-meta-container {
+        width: 100%;
+        justify-content: space-between;
+    }
 }
 
 @media (max-width: 768px) {
@@ -456,19 +614,92 @@ body {
         gap: 14px;
     }
 
+    .title-container,
+    .create-task-container > button {
+        max-width: none;
+    }
+
     .task-main-content {
-        padding-right: 0;
+        gap: 14px;
+    }
+
+    .task-side-content {
+        width: 100%;
+        min-width: 0;
+        align-items: flex-start;
         gap: 14px;
     }
 
     .date-display-container,
     .notes-display-container {
-        position: static;
         text-align: left;
-        max-width: none;
     }
 
     .name-display-container {
         flex-wrap: wrap;
+    }
+
+    .task-complete-checkbox {
+        width: 24px;
+        height: 24px;
+    }
+}
+
+@media (max-width: 560px) {
+    body {
+        padding: 10px;
+    }
+
+    .ui-container {
+        gap: 14px;
+    }
+
+    .task-display-container {
+        padding: 12px;
+        border-radius: 16px;
+    }
+
+    .taskform-overlay {
+        padding: 12px;
+    }
+
+    .taskform-container {
+        padding: 16px;
+        border-radius: 14px;
+    }
+
+    .taskform-container > form {
+        gap: 12px;
+        padding: 28px 0 0;
+    }
+
+    .name-container,
+    .date-container,
+    .priority-container,
+    .checklist-container,
+    .notes-container {
+        padding: 8px 0;
+    }
+
+    .submit-container {
+        width: 100%;
+    }
+
+    .submit-container > button,
+    .delete-confirmation-actions > button {
+        width: 100%;
+    }
+
+    .delete-confirmation-actions {
+        flex-direction: column-reverse;
+        align-items: stretch;
+    }
+
+    .new-task {
+        padding: 14px;
+    }
+
+    .task-meta-container {
+        gap: 6px;
     }
 }

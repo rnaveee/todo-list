@@ -1,9 +1,11 @@
-import { renderTask } from '../logic/renderTask';
 import type { Task, checkListItem } from '../types/task';
+import { pushTask } from '../logic/handleStorage';
 
 export function handleCreateTaskForm() {
     const uiContainer = document.getElementById("ui-container") as HTMLDivElement;
     const existingOverlay = document.querySelector(".taskform-overlay");
+    const modalAnimationClass = 'taskform-overlay-visible';
+    const modalTransitionMs = 320;
 
     if (existingOverlay) {
         return;
@@ -18,6 +20,30 @@ export function handleCreateTaskForm() {
     const taskForm = document.createElement("form");
     taskFormContainer.appendChild(taskForm);
     taskFormOverlay.appendChild(taskFormContainer);
+
+    const removeTaskFormOverlay = () => {
+        let isRemoved = false;
+        taskFormOverlay.classList.remove(modalAnimationClass);
+
+        const cleanup = () => {
+            if (isRemoved) {
+                return;
+            }
+
+            isRemoved = true;
+            taskFormOverlay.removeEventListener('transitionend', handleTransitionEnd);
+            taskFormOverlay.remove();
+        };
+
+        const handleTransitionEnd = (event: TransitionEvent) => {
+            if (event.target === taskFormOverlay) {
+                cleanup();
+            }
+        };
+
+        taskFormOverlay.addEventListener('transitionend', handleTransitionEnd);
+        window.setTimeout(cleanup, modalTransitionMs + 50);
+    };
 
     const nameContainer = document.createElement("div");
     nameContainer.classList.add("name-container");
@@ -132,8 +158,8 @@ export function handleCreateTaskForm() {
             checkList: checklistData
         };
 
-        renderTask(newTask);
-        taskFormOverlay.remove();
+        pushTask(newTask);
+        removeTaskFormOverlay();
     });
 
     taskForm.appendChild(nameContainer);
@@ -151,14 +177,15 @@ export function handleCreateTaskForm() {
     closeButton.setAttribute('aria-label', 'Close task form');
 
     closeButton.addEventListener('click', () => {
-        taskFormOverlay.remove();
+        removeTaskFormOverlay();
     });
 
     closeContainer.appendChild(closeButton);
     taskForm.appendChild(closeContainer);
 
-
-
     uiContainer.appendChild(taskFormOverlay);
+    requestAnimationFrame(() => {
+        taskFormOverlay.classList.add(modalAnimationClass);
+    });
 
 }

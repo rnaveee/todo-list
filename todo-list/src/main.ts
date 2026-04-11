@@ -2,6 +2,7 @@ import './styles.css';
 import { createTitle } from './ui/title';
 import { createTaskButton } from './ui/createTaskButton';
 import { createTaskDisplay } from './ui/task-display';
+import { renderAllTasks } from './logic/renderAllTasks';
 
 const uiContainer = document.createElement("div");
 uiContainer.classList.add("ui-container");
@@ -14,3 +15,4 @@ uiContainer.append(
     createTaskDisplay()
 );
 app.appendChild(uiContainer);
+renderAllTasks();
