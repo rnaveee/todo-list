@@ -55,7 +55,9 @@ export function handleCreateTaskForm() {
     nameInput.name = 'name';
     nameInput.type = 'text';
     nameInput.placeholder = 'Name of task';
+    nameInput.maxLength = 20;
     nameInput.required = true;
+    nameInput.title = 'Task names can be up to 20 characters long.';
     nameInput.autocomplete = 'off';
     nameInput.spellcheck = false;
     nameContainer.appendChild(nameLabel);

@@ -50,7 +50,7 @@ export function renderTask(newTask: Task){
     nameContainer.appendChild(taskComplete);
 
     const nameDiv = document.createElement('div');
-    nameDiv.textContent = newTask.name + ' | ';
+    nameDiv.textContent = newTask.name + ' •x ';
     nameContainer.appendChild(nameDiv);
 
     const dateDiv = document.createElement('div');
@@ -64,7 +64,7 @@ export function renderTask(newTask: Task){
 
     const taskCompletionText = document.createElement('div');
     taskCompletionText.classList.add('task-completion-label');
-    taskCompletionText.textContent = 'Completed!';
+    taskCompletionText.textContent = 'Completed task!';
     nameContainer.appendChild(taskCompletionText);
 
     const colors: Record<string, string> = {
