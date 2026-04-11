@@ -15,6 +15,10 @@ body {
     padding: clamp(12px, 2vw, 24px);
 }
 
+#app {
+    width: 100%;
+}
+
 .ui-container {
     display: flex;
     flex-direction: column;
@@ -333,6 +337,8 @@ body {
 @media (max-width: 768px) {
     .taskform-container > form {
         grid-template-columns: 1fr;
+        gap: 12px;
+        padding: 36px 0 0;
     }
 
     .name-container,
@@ -342,6 +348,7 @@ body {
     .notes-container,
     .submit-container {
         grid-column: 1;
+        grid-row: auto;
     }
 
     .name-container {
@@ -349,8 +356,50 @@ body {
         align-items: flex-start;
     }
 
+    .date-container,
+    .priority-container,
+    .checklist-container,
+    .notes-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .taskform-overlay {
+        padding: 12px;
+        align-items: flex-start;
+        overflow-y: auto;
+    }
+
+    .taskform-container {
+        width: 100%;
+        min-height: auto;
+        max-height: none;
+        margin-top: 8px;
+        padding: 16px;
+        border-radius: 14px;
+        transform: translateY(-24px);
+    }
+
+    .name-container,
+    .date-container,
+    .priority-container,
+    .checklist-container,
+    .notes-container {
+        gap: 8px;
+        padding: 8px 0;
+    }
+
+    .name-container > label,
+    .date-container > label,
+    .priority-container > label,
+    .checklist-container > label,
+    .notes-container > label {
+        white-space: normal;
+    }
+
     .submit-container {
         justify-content: stretch;
+        width: 100%;
     }
 }
 
@@ -418,7 +467,7 @@ body {
 
 .new-task {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(240px, 32%);
+    grid-template-columns: minmax(0, 1fr) 320px;
     align-items: start;
     gap: 16px 24px;
     padding: 18px 20px;
@@ -426,6 +475,7 @@ body {
     border-radius: 16px;
     background-color: #130d2d;
     color: white;
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.24);
 }
 
 .task-main-content {
@@ -439,16 +489,16 @@ body {
 .task-side-content {
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
-    gap: 18px;
-    width: 100%;
-    min-width: 240px;
-    max-width: 360px;
+    align-items: stretch;
+    gap: 14px;
+    width: 320px;
+    min-width: 320px;
 }
 
 .name-display-container {
     display: flex;
     align-items: baseline;
+    flex-wrap: wrap;
     gap: 12px;
     min-width: 0;
     font-size: clamp(1.8rem, 3vw, 2.6rem);
@@ -473,6 +523,7 @@ body {
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.04em;
+    margin-top: 10px;
 }
 
 .task-completion-label {
@@ -491,7 +542,10 @@ body {
 }
 
 .date-display-container {
-    text-align: right;
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    min-width: 0;
     white-space: nowrap;
     font-size: clamp(0.85rem, 1.5vw, 1rem);
     color: #d7d2f5;
@@ -500,12 +554,16 @@ body {
 .task-meta-container {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
+    width: 100%;
+    justify-content: space-between;
 }
 
 .remove-container {
     display: flex;
     align-items: center;
+    justify-content: flex-end;
+    flex: 0 0 auto;
 }
 
 .remove-container > button {
@@ -564,23 +622,32 @@ body {
 }
 
 .notes-title {
-    display: inline;
-    font-size: 1.15rem;
+    display: block;
+    font-size: 0.95rem;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.04em;
-    margin-right: 8px;
+    letter-spacing: 0.08em;
+    color: #d7d2f5;
+    margin-bottom: 8px;
 }
 
 .notes-body {
-    display: inline;
+    min-height: 132px;
+    padding: 12px 14px;
+    border: 2px solid black;
+    border-radius: 5px;
+    background-color: #1f0f67;
+    color: white;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.6;
+    white-space: pre-wrap;
 }
 
 .notes-display-container {
-    width: 100%;
+    width: 320px;
     text-align: left;
     font-size: 1.1rem;
-    line-height: 1.6;
     color: #e5e1ff;
     overflow-wrap: anywhere;
 }
@@ -591,19 +658,17 @@ body {
     }
 
     .new-task {
-        grid-template-columns: minmax(0, 1fr);
+        grid-template-columns: minmax(0, 1fr) 280px;
     }
 
     .task-side-content {
-        max-width: none;
-        min-width: 0;
-        align-items: flex-start;
+        width: 280px;
+        min-width: 280px;
         gap: 14px;
     }
 
-    .task-meta-container {
-        width: 100%;
-        justify-content: space-between;
+    .notes-display-container {
+        width: 280px;
     }
 }
 
@@ -611,7 +676,9 @@ body {
     .new-task {
         display: flex;
         flex-direction: column;
+        position: relative;
         gap: 14px;
+        padding-top: 52px;
     }
 
     .title-container,
@@ -626,8 +693,17 @@ body {
     .task-side-content {
         width: 100%;
         min-width: 0;
-        align-items: flex-start;
+        align-items: stretch;
         gap: 14px;
+    }
+
+    .task-meta-container {
+        position: absolute;
+        top: 14px;
+        right: 14px;
+        width: auto;
+        justify-content: flex-end;
+        align-items: center;
     }
 
     .date-display-container,
@@ -636,10 +712,40 @@ body {
     }
 
     .name-display-container {
-        flex-wrap: wrap;
+        align-items: flex-start;
+        gap: 10px;
+        font-size: clamp(1.35rem, 7vw, 2rem);
+    }
+
+    .priority-display-container {
+        font-size: 1rem;
+    }
+
+    .date-display-container {
+        white-space: normal;
+    }
+
+    .notes-display-container {
+        width: 100%;
+    }
+
+    .notes-body {
+        min-height: 0;
+    }
+
+    .create-task-container > button,
+    .submit-container > button,
+    .checklist-container > button {
+        width: 100%;
+    }
+
+    .notes-body,
+    .checklist-item {
+        overflow-wrap: anywhere;
     }
 
     .task-complete-checkbox {
+        margin-top: 10px;
         width: 24px;
         height: 24px;
     }
@@ -659,26 +765,8 @@ body {
         border-radius: 16px;
     }
 
-    .taskform-overlay {
-        padding: 12px;
-    }
-
-    .taskform-container {
-        padding: 16px;
-        border-radius: 14px;
-    }
-
     .taskform-container > form {
-        gap: 12px;
-        padding: 28px 0 0;
-    }
-
-    .name-container,
-    .date-container,
-    .priority-container,
-    .checklist-container,
-    .notes-container {
-        padding: 8px 0;
+        padding-top: 28px;
     }
 
     .submit-container {
@@ -701,5 +789,7 @@ body {
 
     .task-meta-container {
         gap: 6px;
+        align-items: flex-start;
+        flex-wrap: wrap;
     }
 }

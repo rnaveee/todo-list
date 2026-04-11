@@ -1,5 +1,5 @@
 import type { Task, checkListItem } from '../types/task.ts';
-import { confirmTaskDeletion } from '../logic/confirmTaskDeletion.ts'
+import { confirmTaskDeletion } from '../logic/confirmTaskDeletion.ts';
 
 export function renderTask(newTask: Task){
     const setCompletionVisibility = (element: HTMLDivElement, isVisible: boolean) => {
@@ -13,7 +13,7 @@ export function renderTask(newTask: Task){
     newTaskContainer.classList.add('new-task');
     const taskDisplayContainer = document.getElementById("task-display-container") as HTMLDivElement;
 
-    taskDisplayContainer.appendChild(newTaskContainer);    
+    taskDisplayContainer.appendChild(newTaskContainer);
 
     const leftColumn = document.createElement('div');
     leftColumn.classList.add('task-main-content');
@@ -21,12 +21,12 @@ export function renderTask(newTask: Task){
     const sideColumn = document.createElement('div');
     sideColumn.classList.add('task-side-content');
     newTaskContainer.appendChild(sideColumn);
+    const metaContainer = document.createElement('div');
+    metaContainer.classList.add('task-meta-container');
 
     const nameContainer = document.createElement('div');
     nameContainer.classList.add('name-display-container');
     leftColumn.appendChild(nameContainer);
-    const taskMetaContainer = document.createElement('div');
-    taskMetaContainer.classList.add('task-meta-container');
     const dateContainer = document.createElement('div');
     dateContainer.classList.add('date-display-container');
     const priorityContainer = document.createElement('div');
@@ -43,7 +43,6 @@ export function renderTask(newTask: Task){
     removeButton.textContent = 'X';
     removeButton.setAttribute('aria-label', `Remove task ${newTask.name}`);
     removeContainer.appendChild(removeButton);
-    
 
     const taskComplete = document.createElement('input');
     taskComplete.type = 'checkbox';
@@ -79,7 +78,7 @@ export function renderTask(newTask: Task){
 
     const notesTitle = document.createElement('div');
     notesTitle.classList.add('notes-title');
-    notesTitle.textContent = 'Notes:';
+    notesTitle.textContent = 'NOTES:';
     notesContainer.appendChild(notesTitle);
 
     const notesDiv = document.createElement('div');
@@ -154,9 +153,9 @@ export function renderTask(newTask: Task){
     });
 
     leftColumn.appendChild(checklistContainer);
-    taskMetaContainer.appendChild(dateContainer);
-    taskMetaContainer.appendChild(removeContainer);
-    sideColumn.appendChild(taskMetaContainer);
+    metaContainer.appendChild(dateContainer);
+    metaContainer.appendChild(removeContainer);
+    sideColumn.appendChild(metaContainer);
     sideColumn.appendChild(notesContainer);
 
     return newTask;
