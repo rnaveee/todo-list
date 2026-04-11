@@ -7,6 +7,7 @@ body {
     background:
         radial-gradient(circle at top, rgba(76, 53, 143, 0.2), transparent 55%),
         linear-gradient(180deg, #17122f 0%, #110d22 100%);
+    min-height: 100%;
 }
 
 body {
@@ -15,12 +16,18 @@ body {
     justify-content: center;
     align-items: flex-start;
     min-height: 100vh;
+    min-height: 100dvh;
     margin: 0;
-    padding: clamp(12px, 2vw, 24px);
+    padding:
+        calc(clamp(12px, 2vw, 24px) + env(safe-area-inset-top))
+        calc(clamp(12px, 2vw, 24px) + env(safe-area-inset-right))
+        calc(clamp(12px, 2vw, 24px) + env(safe-area-inset-bottom))
+        calc(clamp(12px, 2vw, 24px) + env(safe-area-inset-left));
 }
 
 #app {
     width: 100%;
+    min-height: calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
 }
 
 .ui-container {
