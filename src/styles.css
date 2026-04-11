@@ -4,6 +4,7 @@
 
 html,
 body {
+    color-scheme: dark;
     background:
         radial-gradient(circle at top, rgba(76, 53, 143, 0.2), transparent 55%),
         linear-gradient(180deg, #17122f 0%, #110d22 100%);
@@ -36,7 +37,7 @@ body {
     align-items: center;
     gap: 20px;
     width: min(1200px, 100%);
-    margin: 0 auto;
+    margin: clamp(12px, 4vh, 40px) auto 0;
 }
 
 .title-container {
