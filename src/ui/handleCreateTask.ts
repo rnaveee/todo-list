@@ -18,6 +18,7 @@ export function handleCreateTaskForm() {
     taskFormContainer.classList.add("taskform-container");
 
     const taskForm = document.createElement("form");
+    taskForm.autocomplete = 'off';
     taskFormContainer.appendChild(taskForm);
     taskFormOverlay.appendChild(taskFormContainer);
 
@@ -55,6 +56,8 @@ export function handleCreateTaskForm() {
     nameInput.type = 'text';
     nameInput.placeholder = 'Name of task';
     nameInput.required = true;
+    nameInput.autocomplete = 'off';
+    nameInput.spellcheck = false;
     nameContainer.appendChild(nameLabel);
     nameContainer.appendChild(nameInput);
 
@@ -84,6 +87,7 @@ export function handleCreateTaskForm() {
     const dateInput = document.createElement("input");
     dateInput.name = 'dueDate';
     dateInput.type = 'date';
+    dateInput.autocomplete = 'off';
     dateContainer.appendChild(dateLabel);
     dateContainer.appendChild(dateInput);
 
@@ -102,6 +106,8 @@ export function handleCreateTaskForm() {
         const checklistField = document.createElement('input');
         checklistField.name = 'checklist';
         checklistField.placeholder = 'Task';
+        checklistField.autocomplete = 'off';
+        checklistField.spellcheck = false;
         checklistContainer.appendChild(checklistField);
     });
 
@@ -112,6 +118,10 @@ export function handleCreateTaskForm() {
     const notesInput = document.createElement("textarea");
     notesInput.name = 'notes';
     notesInput.placeholder = "Add notes";
+    notesInput.autocomplete = 'off';
+    notesInput.spellcheck = false;
+    notesInput.setAttribute('autocorrect', 'off');
+    notesInput.setAttribute('autocapitalize', 'off');
     notesContainer.appendChild(notesLabel);
     notesContainer.appendChild(notesInput);
 
