@@ -568,13 +568,15 @@ body {
 }
 
 .name-display-container {
-    display: flex;
-    align-items: baseline;
-    flex-wrap: wrap;
-    gap: 12px;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: start;
+    column-gap: 12px;
+    row-gap: 8px;
     min-width: 0;
     font-size: clamp(1.8rem, 3vw, 2.6rem);
     font-weight: bold;
+    width: 100%;
 }
 
 .task-complete-checkbox {
@@ -584,18 +586,35 @@ body {
     flex: 0 0 auto;
     accent-color: #6ad0ff;
     cursor: pointer;
+    grid-column: 1;
+    grid-row: 1;
+    align-self: start;
+    margin-top: 0.24em;
 }
 
-.name-display-container > :first-child {
+.name-display-container > :nth-child(2) {
     overflow-wrap: anywhere;
+    min-width: 0;
+}
+
+.name-display-container > :nth-child(3) {
+    grid-column: 3;
+    grid-row: 1;
+    justify-self: start;
+}
+
+.name-display-container > :nth-child(4) {
+    grid-column: 2 / -1;
+    grid-row: 2;
 }
 
 .priority-display-container {
-    font-size: clamp(2rem, 1.2vw, 1rem);
+    font-size: clamp(0.9rem, 1vw, 1rem);
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.04em;
-    margin-top: 10px;
+    margin-top: 0.4em;
+    white-space: nowrap;
 }
 
 .task-completion-label {
@@ -614,7 +633,6 @@ body {
 }
 
 .date-display-container {
-    margin-top: 8px;
     display: flex;
     align-items: center;
     min-width: 0;
@@ -624,11 +642,11 @@ body {
 }
 
 .task-meta-container {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: start;
+    gap: 8px 12px;
     width: 100%;
-    justify-content: space-between;
 }
 
 .remove-container {
@@ -636,6 +654,8 @@ body {
     align-items: center;
     justify-content: flex-end;
     flex: 0 0 auto;
+    grid-column: 2;
+    grid-row: 1;
 }
 
 .remove-container > button {
@@ -672,6 +692,7 @@ body {
     font-size: clamp(1.1rem, 1.9vw, 1.45rem);
     font-weight: 600;
     line-height: 1.6;
+    width: 100%;
 }
 
 .checklist-item {
@@ -746,11 +767,8 @@ body {
 
 @media (max-width: 768px) {
     .new-task {
-        display: flex;
-        flex-direction: column;
-        position: relative;
+        grid-template-columns: minmax(0, 1fr);
         gap: 14px;
-        padding-top: 52px;
     }
 
     .title-container,
@@ -774,12 +792,10 @@ body {
     }
 
     .task-meta-container {
-        position: absolute;
-        top: 14px;
-        right: 14px;
-        width: auto;
-        justify-content: flex-end;
-        align-items: center;
+        grid-template-columns: minmax(0, 1fr) auto;
+        justify-content: stretch;
+        justify-items: stretch;
+        gap: 8px 12px;
     }
 
     .date-display-container,
@@ -788,25 +804,25 @@ body {
     }
 
     .name-display-container {
-        display: flex;
-        align-items: flex-start;
-        flex-wrap: wrap;
+        grid-template-columns: auto minmax(0, 1fr) auto;
         gap: 8px 10px;
         font-size: clamp(1.35rem, 7vw, 2rem);
     }
 
     .task-completion-label {
-        flex-basis: 100%;
         margin-top: -2px;
-        /*margin-left: calc(24px + 10px);*/
     }
 
     .priority-display-container {
         font-size: 1rem;
+        margin-top: 0.2em;
     }
 
     .date-display-container {
         white-space: normal;
+        grid-column: 1;
+        grid-row: 1;
+        justify-self: end;
     }
 
     .notes-display-container {
@@ -835,7 +851,6 @@ body {
     }
 
     .task-complete-checkbox {
-        margin-top: 10px;
         width: 24px;
         height: 24px;
     }
@@ -890,6 +905,46 @@ body {
     .task-meta-container {
         gap: 6px;
         align-items: flex-start;
-        flex-wrap: wrap;
+    }
+
+    .name-display-container {
+        grid-template-columns: auto minmax(0, 1fr);
+    }
+
+    .name-display-container > :nth-child(3) {
+        grid-column: 2;
+        grid-row: 2;
+        justify-self: start;
+        margin-top: 0;
+    }
+
+    .name-display-container > :nth-child(4) {
+        grid-column: 1 / -1;
+        grid-row: 3;
+    }
+
+    .task-side-content {
+        order: 2;
+    }
+
+    .task-main-content {
+        order: 1;
+    }
+
+    .task-meta-container {
+        grid-template-columns: minmax(0, 1fr) auto;
+        align-items: center;
+    }
+
+    .date-display-container {
+        grid-column: 1;
+        grid-row: 1;
+        justify-self: end;
+        align-self: center;
+    }
+
+    .remove-container {
+        grid-column: 2;
+        grid-row: 1;
     }
 }

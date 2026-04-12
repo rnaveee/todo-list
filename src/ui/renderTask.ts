@@ -50,7 +50,7 @@ export function renderTask(newTask: Task){
     nameContainer.appendChild(taskComplete);
 
     const nameDiv = document.createElement('div');
-    nameDiv.textContent = newTask.name + ' •x ';
+    nameDiv.textContent = newTask.name;
     nameContainer.appendChild(nameDiv);
 
     const dateDiv = document.createElement('div');
